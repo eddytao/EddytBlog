@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+
+    <meta name="renderer" content="webkit">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>
+        @ViewBag.Title - EddytBlog
+    </title>
+
+
+
+    <!-- CDN路径 -->
+
+    <link href="~/Content/yzm/css/metro-bootstrap.css" rel="stylesheet" />
+
+    <link href="~/Content/yzm/css/normalize.css" rel="stylesheet" />
+
+    <link href="~/Content/yzm/css/grid.css" rel="stylesheet" />
+
+    <link href="~/Content/yzm/css/style.css" rel="stylesheet" />
+
+
+
+    <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    
+    @*<script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>*@
+
+</head>
+
+<body>
+
+    <!--[if lt IE 8]>
+
+            <div class="browsehappy">当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/">升级你的浏览器</a>.</div>
+
+            <![endif]-->
+
+
+
+    <header id="header" class="clearfix">
+
+        <div class="container">
+
+            <div class="colgroup">
+
+                <div class="site-name col-mb-12 col-9">
+
+                    <a id="logo" href="http://www.eddyt.me/">
+
+                        Eddy's Blog
+
+                    </a>
+
+                    <p class="description">Just to do it</p>
+
+                </div>
+
+                <div class="col-mb-12">
+
+                    <nav id="nav-menu" class="clearfix" role="navigation">
+
+                        <a class="current" href="http://www.eddyt.me/"><span class="glyphicon glyphicon-home"></span> 首页</a>
+
+                        <a href="#"><span class="glyphicon glyphicon-pencil"></span> 留言</a>
+
+                    </nav>
+
+                </div>
+
+            </div><!-- end .colgroup -->
+
+        </div>
+
+    </header><!-- end #header -->
+
+    <div id="body">
+
+        <div class="container">
+
+            <div class="colgroup">
+                @RenderBody()
+            </div><!-- end .colgroup -->
+
+        </div>
+
+    </div><!-- end #body -->
+
+
+
+    <footer id="footer" role="contentinfo">
+
+        &copy; @DateTime.Now.Year  <a href="#">Eddy's Blog</a>.
+
+    </footer><!-- end #footer -->
+
+</body>
+
+</html>

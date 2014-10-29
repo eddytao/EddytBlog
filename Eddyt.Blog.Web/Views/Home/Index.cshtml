@@ -1,0 +1,98 @@
+﻿@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Data.Article>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-mb-12" id="main" role="main">
+    @foreach (var article in Model.ResultList)
+    {
+        <article class="post">
+
+            <h2 class="post-title"><a href="~/Archives/@article.ArticleNo">@article.Title</a> </h2>
+
+            <div class="post-content">
+
+                @(article.Content.Length > 200 ? article.Content.Substring(0, 200) : article.Content)
+
+            </div>
+
+        </article>
+    }
+
+    <div class="pagination">
+        <ol class="page-navigator">
+            @{
+                int totalPage = (Model.TotalCount - 1) / Model.PageSize;//总页数
+
+                if ((totalPage * Model.PageSize) < Model.TotalCount)
+                {
+                    totalPage += 1;
+                }
+                //当前页不是首页
+                if (Model.PageNumber > 1)
+                {
+                    <li><a title="上一页" href="~/page=@(Model.PageNumber-1)">«</a></li>
+                }
+
+                //总页数小于6
+                if (totalPage < 6)
+                {
+                    for (int page = 1; page <= totalPage; page++)
+                    {
+                        if (page == Model.PageNumber)
+                        {
+                            <li class="current"><a href="~/page=@page">@page</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/page=@page">@page</a></li>
+                        }
+
+                    }
+                }
+                else
+                {
+                    for (int page = (Model.PageNumber - 2); page <= (Model.PageNumber + 2); page++)
+                    {
+                        if (page == Model.PageNumber)
+                        {
+                            <li class="current"><a href="~/page=@page">@page</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/page=@page">@page</a></li>
+                        }
+
+                    }
+                }
+
+                //当前页不是尾页
+                if (Model.PageNumber < totalPage)
+                {
+                    <li><a title="下一页" href="~/page=@(Model.PageNumber+1)">»</a></li>
+                }
+
+            }
+        </ol>
+    </div>
+
+    @*<div class="pagination">
+
+            <ol class="page-navigator">
+                <li><a href="#">«</a></li>
+                <li class="current"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">»</a></li>
+            </ol>
+
+        </div>*@
+
+    <div class="links">
+        <li><span class="glyphicon glyphicon-link"></span> 友情链接：</li>
+        <li><a href="http://www.imqrw.com/" title="VareQuan's Blog" target="_blank"> VareQuan's Blog</a></li>
+        <li><a href="http://danwi.me/" title="丹维工作室" target="_blank"> 丹维工作室</a></li>
+    </div>
+
+</div><!-- end #main-->

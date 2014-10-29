@@ -1,0 +1,109 @@
+﻿@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Data.Article>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<p>
+    <ol class="breadcrumb">
+        <li><a href="/">主页</a></li>
+        <li class="active">文章管理</li>
+    </ol>
+</p>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="~/" class="list-group-item active">文章管理</a>
+            <a href="#" class="list-group-item">评论管理</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <p><a href="~/Home/AddArticle" class="btn btn-primary pull-right" role="button">添加文章</a></p>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>发表时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var article in Model.ResultList)
+                {
+                    <tr>
+                        <td>@article.Title</td>
+                        <td>@article.CreateTime</td>
+                        <td><a class="btn btn-default" href="~/EditArticle/@article.ArticleNo">编辑</a><a class="btn btn-default" href="~/DeleteArticle/@article.ArticleId">删除</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>
+            <ul class="pagination">
+
+                @{
+                    int totalPage = (Model.TotalCount - 1) / Model.PageSize;//总页数
+
+                    if ((totalPage * Model.PageSize) < Model.TotalCount)
+                    {
+                        totalPage += 1;
+                    }
+                    //当前页不是首页
+                    if (Model.PageNumber > 1)
+                    {
+                        <li><a title="上一页" href="~/page=@(Model.PageNumber-1)">&laquo;</a></li>
+                    }
+                    else
+                    {
+                        <li class="disabled"><a title="上一页" href="~/page=@Model.PageNumber">&laquo;</a></li>
+                    }
+
+                    //总页数小于6
+                    if (totalPage < 6)
+                    {
+                        for (int page = 1; page <= totalPage; page++)
+                        {
+                            if (page == Model.PageNumber)
+                            {
+                                <li class="active"><a href="~/page=@page">@page</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="~/page=@page">@page</a></li>
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        for (int page = (Model.PageNumber - 2); page <= (Model.PageNumber + 2); page++)
+                        {
+                            if (page == Model.PageNumber)
+                            {
+                                <li class="active"><a href="~/page=@page">@page</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="~/page=@page">@page</a></li>
+                            }
+
+                        }
+                    }
+
+                    //当前页不是尾页
+                    if (Model.PageNumber < totalPage)
+                    {
+                        <li><a title="下一页" href="~/page=@(Model.PageNumber+1)">&raquo;</a></li>
+                    }
+                    else
+                    {
+                        <li class="disabled"><a title="下一页" href="~/page=@Model.PageNumber">&raquo;</a></li>
+                    }
+                }
+            </ul>
+        </p>
+
+    </div>
+</div>
