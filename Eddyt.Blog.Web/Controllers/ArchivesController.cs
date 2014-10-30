@@ -19,6 +19,8 @@ namespace Eddyt.Blog.Web.Controllers
             var article = articleManager.GetByArticleNo(articleNo);
             var comments = commentManager.GetAllCommentsByArticleId(article.ArticleId);
 
+            article.CreateTime.AddHours(8);       //格林威治时间转换为北京时间
+
             ViewBag.Comments = comments;
             ViewBag.CommentsCount = comments.Count();
 
@@ -29,7 +31,7 @@ namespace Eddyt.Blog.Web.Controllers
         public ActionResult AddComment(Comment comment)
         {
             comment.CommentId = Guid.NewGuid().ToString();
-            comment.CreateTime = DateTime.Now;
+            comment.CreateTime = DateTime.UtcNow;
 
             try
             {
