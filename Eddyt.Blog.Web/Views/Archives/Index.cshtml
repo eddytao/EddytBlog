@@ -26,7 +26,7 @@
                         <img class="avatar" src="~/Image/head.jpg" alt="john" width="32" height="32">        <cite class="fn">@comment.Name</cite>
                     </div>
                     <div class="comment-meta">
-                        <a href="#">@comment.CreateTime</a>
+                        <a href="#">@comment.CreateTime.AddHours(8)</a>
                     </div>
                     <div class="comment-content">
                         <p>@comment.Content</p>
