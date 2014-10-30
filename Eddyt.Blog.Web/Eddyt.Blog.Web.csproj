@@ -197,6 +197,7 @@
     <Content Include="Content\yzm\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\yzm\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\yzm\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\WebReleaseConfig.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Image\head.jpg" />
     <Content Include="Scripts\bootstrap.js" />
