@@ -34,7 +34,7 @@ namespace Eddyt.Blog.Admin.Controllers
         {
             article.ArticleId = Guid.NewGuid().ToString();
             article.ArticleNo = new Random().Next(100000);
-            article.CreateTime = DateTime.Now;
+            article.CreateTime = DateTime.UtcNow;   //格林威治时间
             article.CreateName = "admin";
 
             try
