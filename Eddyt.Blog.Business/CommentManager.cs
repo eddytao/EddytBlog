@@ -17,6 +17,11 @@ namespace Eddyt.Blog.Business
             return db.Comment.Where(c => c.ArticleId == articleId);
         }
 
+        public IEnumerable<Comment> GetAboutComments()
+        {
+            return db.Comment.Where(c => c.ArticleId == null);
+        }
+
         public void AddComment(Comment comment)
         {
             db.Comment.Add(comment);
