@@ -1,7 +1,69 @@
-﻿@{
+﻿@model IEnumerable<Eddyt.Blog.Data.Comment>
+@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="col-mb-12" id="main" role="main">
+
+    <h2>关于</h2>
+    <h3>Eddy</h3>
+    <h4>男，无证程序猿一枚</h4>
+
+    <address>
+        <strong>Email:</strong>   <a href="mailto:hongfei1991@hotmail.com">hongfei1991[at]hotmail.com</a><br />
+        <strong>新浪微博:</strong>   <a href="http://weibo.com/hongfei008/" target="_blank">http://weibo.com/hongfei008</a><br />
+        <strong>GitHub:</strong>   <a href="http://weibo.com/hongfei008/" target="_blank">https://github.com/eddytao</a><br />
+    </address>
+
+    <div id="comments">
+        <h3>已有 @Model.Count() 条评论</h3>
+
+        <ol class="comment-list">
+            @foreach (var comment in Model)
+            {
+                <li class="comment-body comment-parent comment-odd">
+                    <div class="comment-author">
+                        <img class="avatar" src="~/Image/head.jpg" alt="john" width="32" height="32">        <cite class="fn">@comment.Name</cite>
+                    </div>
+                    <div class="comment-meta">
+                        <a href="#">@comment.CreateTime.AddHours(8)</a>
+                    </div>
+                    <div class="comment-content">
+                        <p>@comment.Content</p>
+                    </div>
+                    <div class="comment-reply">
+                        <a href="#" rel="nofollow">回复</a>
+                    </div>
+                </li>
+            }
+        </ol>
+
+
+        <div id="respond-post-8" class="respond">
+            <div class="cancel-comment-reply">
+                <a id="cancel-comment-reply-link" href="#" rel="nofollow" style="display:none" onclick="return TypechoComment.cancelReply();">取消回复</a>
+            </div>
+
+            <h3 id="response">添加新评论</h3>
+            <form method="post" action="~/Home/AddComment" id="comment-form" role="form">
+                <p>
+                    <label for="Name" class="required">称呼</label>
+                    <input type="text" name="Name" class="form-control" id="Name" value="" required="">
+                </p>
+                <p>
+                    <label for="Email" class="required">Email</label>
+                    <input type="email" name="Email" id="Email" class="form-control text" value="" required="">
+                </p>
+                <p>
+                    <label for="Content" class="required">内容</label>
+                </p>
+                <textarea rows="8" cols="50" name="Content" id="Content" class="form-control textarea" required=""></textarea>
+                <p></p>
+                <p>
+                    <button type="submit" class="btn btn-primary submit">提交评论</button>（评论需要先通过审核）
+                </p>
+            </form>
+        </div>
+    </div>
+
+</div>
