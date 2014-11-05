@@ -20,6 +20,12 @@ namespace Eddyt.Blog.Web
             );
 
             routes.MapRoute(
+                name: "AboutAddComment",
+                url: "Home/AddComment",
+                defaults: new { controller = "Home", action = "AddComment" }
+            );
+
+            routes.MapRoute(
                 name: "Archives",
                 url: "Archives/{articleNo}",
                 defaults: new { controller = "Archives", action = "Index", articleNo = UrlParameter.Optional }
