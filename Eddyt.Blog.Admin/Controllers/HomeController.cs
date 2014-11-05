@@ -11,12 +11,17 @@ namespace Eddyt.Blog.Admin.Controllers
     public class HomeController : Controller
     {
         private readonly ArticleManager articleManager = new ArticleManager();
+        private readonly CommentManager commentManager=new CommentManager();
 
         public ActionResult Index(int page = 1)
         {
             return View(articleManager.GetAllArticlesByPageResult(page, 5));
         }
 
+        public ActionResult CommentManager(int page=1)
+        {
+            return View(commentManager.GetAllCommentsByPageResult(page,5));
+        }
 
         public ActionResult Success()
         {
