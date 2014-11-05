@@ -26,6 +26,12 @@ namespace Eddyt.Blog.Admin
             );
 
             routes.MapRoute(
+                name: "CommentManager",
+                url: "CommentManager/page={page}",
+                defaults: new { controller = "Home", action = "CommentManager", page = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Index",
                 url: "page={page}",
                 defaults: new { controller = "Home", action = "Index", page = UrlParameter.Optional }
