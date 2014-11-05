@@ -61,6 +61,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EddytBlog.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="EddytBlog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EddytBlog.tt</DependentUpon>
+    </Compile>
     <Compile Include="EddytBlog.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

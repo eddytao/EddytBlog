@@ -21,5 +21,7 @@ namespace Eddyt.Blog.Data
         public string Email { get; set; }
         public string Content { get; set; }
         public System.DateTime CreateTime { get; set; }
+    
+        public virtual Article Article { get; set; }
     }
 }

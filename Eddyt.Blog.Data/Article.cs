@@ -14,6 +14,11 @@ namespace Eddyt.Blog.Data
     
     public partial class Article
     {
+        public Article()
+        {
+            this.Comment = new HashSet<Comment>();
+        }
+    
         public string ArticleId { get; set; }
         public int ArticleNo { get; set; }
         public string Title { get; set; }
@@ -22,5 +27,7 @@ namespace Eddyt.Blog.Data
         public Nullable<int> ViewCount { get; set; }
         public string CreateName { get; set; }
         public System.DateTime CreateTime { get; set; }
+    
+        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

@@ -30,9 +30,25 @@
           <Property Name="Content" Type="nvarchar" MaxLength="500" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Comment_Article">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EddytBlogModelStoreContainer">
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comment_Article" Association="Self.FK_Comment_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -41,6 +57,10 @@
         <EntityContainer Name="EddytBlogEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Article" EntityType="EddytBlogModel.Article" />
           <EntitySet Name="Comment" EntityType="EddytBlogModel.Comment" />
+          <AssociationSet Name="FK_Comment_Article" Association="EddytBlogModel.FK_Comment_Article">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Article">
           <Key>
@@ -54,6 +74,7 @@
           <Property Name="ViewCount" Type="Int32" />
           <Property Name="CreateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Comment" Relationship="EddytBlogModel.FK_Comment_Article" FromRole="Article" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -66,7 +87,20 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Article" Relationship="EddytBlogModel.FK_Comment_Article" FromRole="Comment" ToRole="Article" />
         </EntityType>
+        <Association Name="FK_Comment_Article">
+          <End Type="EddytBlogModel.Article" Role="Article" Multiplicity="0..1" />
+          <End Type="EddytBlogModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="ArticleId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
