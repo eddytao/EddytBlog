@@ -3,23 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Eddyt.Blog.Core.Domain;
 using Eddyt.Blog.Data;
+using Eddyt.Blog.Core.Data;
 
 namespace Eddyt.Blog.Business
 {
     public class CommentManager
     {
-        private readonly EddytBlogEntities db = new EddytBlogEntities();
+        private readonly IRepository<Comment> _commentRepository;
+
+        public CommentManager(IRepository<Comment> commentRepository)
+        {
+            this._commentRepository = commentRepository;
+        }
 
         public IEnumerable<Comment> GetAllCommentsByArticleId(string articleId)
         {
-            return db.Comment.Where(c => c.ArticleId == articleId);
+            return _commentRepository.Table.Where(c => c.PostId == articleId);
         }
 
         public IEnumerable<Comment> GetAboutComments()
         {
-            return db.Comment.Where(c => c.ArticleId == null);
+            return _commentRepository.Table.Where(c => c.PostId == null);
         }
 
         public PageResult<Comment> GetAllCommentsByPageResult(int pageNumber, int pageSize)
@@ -28,8 +34,8 @@ namespace Eddyt.Blog.Business
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalCount = db.Comment.Count(),
-                ResultList = db.Comment.AsQueryable().OrderByDescending(c => c.CreateTime)
+                TotalRecords = _commentRepository.Table.Count(),
+                ResultList = _commentRepository.Table.AsQueryable().OrderByDescending(c => c.CreateTime)
                                                     .Skip(pageSize * (pageNumber < 1 ? 0 : pageNumber - 1))
                                                     .Take(pageSize)
             };
@@ -38,8 +44,7 @@ namespace Eddyt.Blog.Business
 
         public void AddComment(Comment comment)
         {
-            db.Comment.Add(comment);
-            db.SaveChanges();
+            _commentRepository.Insert(comment);
         }
     }
 }

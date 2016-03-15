@@ -1,4 +1,4 @@
-﻿@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Data.Article>
+﻿@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Core.Domain.Post>
 
 @{
     ViewBag.Title = "Home";
@@ -35,7 +35,7 @@
                     <tr>
                         <td>@article.Title</td>
                         <td>@article.CreateTime</td>
-                        <td><a class="btn btn-default" href="~/EditArticle/@article.ArticleNo">编辑</a><a class="btn btn-default" href="~/DeleteArticle/@article.ArticleId">删除</a></td>
+                        <td><a class="btn btn-default" href="~/EditArticle/@article.PostNo">编辑</a><a class="btn btn-default" href="~/DeleteArticle/@article.Id">删除</a></td>
                     </tr>
                 }
             </tbody>
@@ -44,9 +44,9 @@
             <ul class="pagination">
 
                 @{
-                    int totalPage = (Model.TotalCount - 1) / Model.PageSize;//总页数
+                    int totalPage = (Model.TotalRecords - 1) / Model.PageSize;//总页数
 
-                    if ((totalPage * Model.PageSize) < Model.TotalCount)
+                    if ((totalPage * Model.PageSize) < Model.TotalRecords)
                     {
                         totalPage += 1;
                     }

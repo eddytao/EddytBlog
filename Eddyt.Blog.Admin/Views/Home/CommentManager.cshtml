@@ -1,0 +1,114 @@
+﻿@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Core.Domain.Comment>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <ol class="breadcrumb">
+        <li><a href="/">主页</a></li>
+        <li class="active">评论管理</li>
+    </ol>
+</p>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="list-group">
+            <a href="~/" class="list-group-item">文章管理</a>
+            <a href="~/home/CommentManager" class="list-group-item active">评论管理</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>称呼</th>
+                    <th>Email</th>
+                    <th>文章</th>
+                    <th>内容</th>
+                    <th>发表时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model.ResultList)
+                {
+                    <tr>
+                        <td>@comment.Name</td>
+                        <td>@comment.Email</td>
+                        <td>@(comment.Post!=null?comment.Post.Title:"关于")</td>
+                        <td>@comment.Content</td>
+                        <td>@comment.CreateTime</td>
+                        <td><a class="btn btn-default" href="#">审核通过</a><a class="btn btn-default" href="#">删除</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>
+            <ul class="pagination">
+
+                @{
+                    int totalPage = (Model.TotalRecords - 1) / Model.PageSize;//总页数
+
+                    if ((totalPage * Model.PageSize) < Model.TotalRecords)
+                    {
+                        totalPage += 1;
+                    }
+                    //当前页不是首页
+                    if (Model.PageNumber > 1)
+                    {
+                        <li><a title="上一页" href="~/CommentManager/page=@(Model.PageNumber-1)">&laquo;</a></li>
+                    }
+                    else
+                    {
+                        <li class="disabled"><a title="上一页" href="~/CommentManager/page=@Model.PageNumber">&laquo;</a></li>
+                    }
+
+                    //总页数小于6
+                    if (totalPage < 6)
+                    {
+                        for (int page = 1; page <= totalPage; page++)
+                        {
+                            if (page == Model.PageNumber)
+                            {
+                                <li class="active"><a href="~/CommentManager/page=@page">@page</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="~/CommentManager/page=@page">@page</a></li>
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        for (int page = (Model.PageNumber - 2); page <= (Model.PageNumber + 2); page++)
+                        {
+                            if (page == Model.PageNumber)
+                            {
+                                <li class="active"><a href="~/CommentManager/page=@page">@page</a></li>
+                            }
+                            else
+                            {
+                                <li><a href="~/CommentManager/page=@page">@page</a></li>
+                            }
+
+                        }
+                    }
+
+                    //当前页不是尾页
+                    if (Model.PageNumber < totalPage)
+                    {
+                        <li><a title="下一页" href="~/CommentManager/page=@(Model.PageNumber+1)">&raquo;</a></li>
+                    }
+                    else
+                    {
+                        <li class="disabled"><a title="下一页" href="~/CommentManager/page=@Model.PageNumber">&raquo;</a></li>
+                    }
+                }
+            </ul>
+        </p>
+
+    </div>
+</div>

@@ -33,6 +33,12 @@ namespace Eddyt.Blog.Admin
 
             routes.MapRoute(
                 name: "Index",
+                url: "",
+                defaults: new { controller = "Home", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "IndexByPage",
                 url: "page={page}",
                 defaults: new { controller = "Home", action = "Index", page = UrlParameter.Optional }
             );

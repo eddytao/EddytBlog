@@ -5,19 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using Eddyt.Blog.Business;
 using Eddyt.Blog.Data;
+using Eddyt.Blog.Core.Domain;
 
 namespace Eddyt.Blog.Web.Controllers
 {
     public class ArchivesController : Controller
     {
-        private readonly ArticleManager articleManager=new ArticleManager();
-        private readonly CommentManager commentManager=new CommentManager();
+        private readonly ArticleManager articleManager=new ArticleManager(new EFRepository<Post>(new EddytBlogObjectContext("EddytBlogEntities")));
+        private readonly CommentManager commentManager=new CommentManager(new EFRepository<Comment>(new EddytBlogObjectContext("EddytBlogEntities")));
         //
         // GET: /Archives/
-        public ActionResult Index(int? articleNo)
+        public ActionResult Index(int articleNo)
         {
             var article = articleManager.GetByArticleNo(articleNo);
-            var comments = commentManager.GetAllCommentsByArticleId(article.ArticleId);
+            var comments = commentManager.GetAllCommentsByArticleId(article.Id);
 
             article.CreateTime.AddHours(8);       //格林威治时间转换为北京时间
 
@@ -30,7 +31,7 @@ namespace Eddyt.Blog.Web.Controllers
         [HttpPost]
         public ActionResult AddComment(Comment comment)
         {
-            comment.CommentId = Guid.NewGuid().ToString();
+            comment.Id = Guid.NewGuid().ToString();
             comment.CreateTime = DateTime.UtcNow;
 
             try

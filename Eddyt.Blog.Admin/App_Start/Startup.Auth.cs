@@ -33,6 +33,11 @@ namespace Eddyt.Blog.Admin
             //   appSecret: "");
 
             //app.UseGoogleAuthentication();
+
+            app.UseSinaWeiboAuthentication(
+                appId: "3010877318",
+                appSecret: "ef07a895e2b9cfa18ceb68e2e36788b8"
+                );
         }
     }
 }

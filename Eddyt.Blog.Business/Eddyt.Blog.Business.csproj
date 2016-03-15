@@ -53,6 +53,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Eddyt.Blog.Core\Eddyt.Blog.Core.csproj">
+      <Project>{9faa99f0-2f9f-49f3-8947-bb35838336d8}</Project>
+      <Name>Eddyt.Blog.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Eddyt.Blog.Data\Eddyt.Blog.Data.csproj">
       <Project>{ff28fdd2-7d00-4ddc-8242-b79749b9f2d6}</Project>
       <Name>Eddyt.Blog.Data</Name>

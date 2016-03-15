@@ -1,4 +1,4 @@
-﻿@model Eddyt.Blog.Data.Article
+﻿@model Eddyt.Blog.Core.Domain.Post
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -29,15 +29,15 @@
             </div>
             <div class="form-group">
                 <label for="Tag">标签</label>
-                <input type="text" class="form-control" id="Tag" name="Tag" placeholder="标签" value="@Model.Tag">
+                <input type="text" class="form-control" id="Tag" name="Tag" placeholder="标签" value="@Model.Tags">
             </div>
             <div class="form-group">
                 <label for="Content">内容</label>
                 <textarea class="form-control" rows="10" id="Content" name="Content">@Html.Raw(Model.Content)</textarea>
                 @*<script id="articleContainer" name="Content" type="text/plain">@Html.Raw(Model.Content)</script>*@
             </div>
-            <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
-            <input type="hidden" name="ArticleNo" value="@Model.ArticleNo" />
+            <input type="hidden" name="ArticleId" value="@Model.Id" />
+            <input type="hidden" name="ArticleNo" value="@Model.PostNo" />
             <button type="submit" class="btn btn-default" id="submitArticle">保存</button>
         </form>
 

@@ -4,57 +4,60 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Eddyt.Blog.Core;
+using Eddyt.Blog.Core.Data;
+using Eddyt.Blog.Core.Domain;
 using Eddyt.Blog.Data;
 
 namespace Eddyt.Blog.Business
 {
     public class ArticleManager
     {
-        private readonly EddytBlogEntities db = new EddytBlogEntities();
+        private readonly IRepository<Post> _postRepository;
 
-        public IEnumerable<Article> GetAllArticles()
+        public ArticleManager(IRepository<Post> postRepository)
         {
-            return db.Article.AsQueryable().OrderByDescending(a => a.CreateTime);
+            this._postRepository = postRepository;
         }
 
-        public PageResult<Article> GetAllArticlesByPageResult(int pageNumber, int pageSize)
+        public IEnumerable<Post> GetAllArticles()
         {
-            var result = new PageResult<Article>
+            return _postRepository.Table.AsQueryable().OrderByDescending(a => a.CreateTime);
+        }
+
+        public PageResult<Post> GetAllArticlesByPageResult(int pageNumber, int pageSize)
+        {
+            var result = new PageResult<Post>
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
-                TotalCount = db.Article.Count(),
-                ResultList = db.Article.AsQueryable().OrderByDescending(a => a.CreateTime)
+                TotalRecords = _postRepository.Table.Count(),
+                ResultList = _postRepository.Table.AsQueryable().OrderByDescending(a => a.CreateTime)
                                                     .Skip(pageSize * (pageNumber < 1 ? 0 : pageNumber - 1))
                                                     .Take(pageSize)
             };
             return result;
         }
 
-        public Article GetByArticleNo(int? articleNo)
+        public Post GetByArticleNo(int postNo)
         {
-            return db.Article.FirstOrDefault(a => a.ArticleNo == articleNo);
+            return _postRepository.Table.FirstOrDefault(a => a.PostNo == postNo);
         }
 
-        public void AddArticle(Article article)
+        public void AddArticle(Post post)
         {
-            db.Article.Add(article);
-            db.SaveChanges();
+            _postRepository.Insert(post); 
         }
 
-        public void DeleteArticle(string articleId)
+        public void DeleteArticle(string postId)
         {
-            var article = db.Article.FirstOrDefault(a => a.ArticleId == articleId);
-            db.Article.Remove(article);
-            db.SaveChanges();
+            var article = _postRepository.Table.FirstOrDefault(a => a.Id == postId);
+            _postRepository.Delete(article);
         }
 
-        public void EditArticle(Article article)
+        public void EditArticle(Post post)
         {
-            db.Article.Attach(article);
-            db.Entry(article).State=EntityState.Modified;
-            db.SaveChanges();
+            _postRepository.Update(post);
         }
     }
 }

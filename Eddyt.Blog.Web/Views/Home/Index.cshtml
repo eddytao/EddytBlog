@@ -1,5 +1,5 @@
 ﻿@using Eddyt.Blog.Web.Common
-@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Data.Article>
+@model Eddyt.Blog.Data.PageResult<Eddyt.Blog.Core.Domain.Post>
 
 @{
     ViewBag.Title = "Home";
@@ -10,7 +10,7 @@
     {
         <article class="post">
 
-            <h2 class="post-title"><a href="~/Archives/@article.ArticleNo">@article.Title</a> </h2>
+            <h2 class="post-title"><a href="~/Archives/@article.PostNo">@article.Title</a> </h2>
 
             <div class="post-content">
 
@@ -24,9 +24,9 @@
     <div class="pagination">
         <ol class="page-navigator">
             @{
-                int totalPage = (Model.TotalCount - 1) / Model.PageSize;//总页数
+                int totalPage = (Model.TotalRecords - 1) / Model.PageSize;//总页数
 
-                if ((totalPage * Model.PageSize) < Model.TotalCount)
+                if ((totalPage * Model.PageSize) < Model.TotalRecords)
                 {
                     totalPage += 1;
                 }

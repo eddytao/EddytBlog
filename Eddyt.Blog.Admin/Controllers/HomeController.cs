@@ -5,29 +5,34 @@ using System.Web;
 using System.Web.Mvc;
 using Eddyt.Blog.Business;
 using Eddyt.Blog.Data;
+using Eddyt.Blog.Core.Domain;
 
 namespace Eddyt.Blog.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ArticleManager articleManager = new ArticleManager();
-        private readonly CommentManager commentManager=new CommentManager();
+        private readonly ArticleManager articleManager = new ArticleManager(new EFRepository<Post>(new EddytBlogObjectContext("DefaultConnection")));
+        private readonly CommentManager commentManager=new CommentManager(new EFRepository<Comment>(new EddytBlogObjectContext("DefaultConnection")));
 
+        [Authorize]
         public ActionResult Index(int page = 1)
         {
             return View(articleManager.GetAllArticlesByPageResult(page, 5));
         }
 
+        [Authorize]
         public ActionResult CommentManager(int page=1)
         {
             return View(commentManager.GetAllCommentsByPageResult(page,5));
         }
 
+        [Authorize]
         public ActionResult Success()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult AddArticle()
         {
             return View();
@@ -35,16 +40,16 @@ namespace Eddyt.Blog.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult AddArticle(Article article)
+        [Authorize]
+        public ActionResult AddArticle(Post post)
         {
-            article.ArticleId = Guid.NewGuid().ToString();
-            article.ArticleNo = new Random().Next(100000);
-            article.CreateTime = DateTime.UtcNow;   //格林威治时间
-            article.CreateName = "admin";
+            post.PostNo = new Random().Next(100000);
+            post.CreateTime = DateTime.UtcNow;   //格林威治时间
+            post.Author = "admin";
 
             try
             {
-                articleManager.AddArticle(article);
+                articleManager.AddArticle(post);
                 return RedirectToAction("Success");
 
             }
@@ -56,6 +61,7 @@ namespace Eddyt.Blog.Admin.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult DeleteArticle(string articleId)
         {
             try
@@ -70,6 +76,7 @@ namespace Eddyt.Blog.Admin.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult EditArticle(int articleNo)
         {
             return View(articleManager.GetByArticleNo(articleNo));
@@ -77,14 +84,15 @@ namespace Eddyt.Blog.Admin.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult EditArticle(Article article)
+        [Authorize]
+        public ActionResult EditArticle(Post post)
         {
-            var _article = articleManager.GetByArticleNo(article.ArticleNo);
+            var _article = articleManager.GetByArticleNo(post.PostNo);
             if (_article == null) throw new ArgumentNullException("_article");
 
-            _article.Title = article.Title;
-            _article.Tag = article.Tag;
-            _article.Content = article.Content;
+            _article.Title = post.Title;
+            _article.Tags = post.Tags;
+            _article.Content = post.Content;
             
             try
             {

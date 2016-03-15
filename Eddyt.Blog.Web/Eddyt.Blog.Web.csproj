@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +32,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -157,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DatabaseConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -255,6 +258,10 @@
     <ProjectReference Include="..\Eddyt.Blog.Business\Eddyt.Blog.Business.csproj">
       <Project>{f5dc0847-cf7e-47e7-9908-cf80e7d8c0c4}</Project>
       <Name>Eddyt.Blog.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Eddyt.Blog.Core\Eddyt.Blog.Core.csproj">
+      <Project>{9faa99f0-2f9f-49f3-8947-bb35838336d8}</Project>
+      <Name>Eddyt.Blog.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Eddyt.Blog.Data\Eddyt.Blog.Data.csproj">
       <Project>{ff28fdd2-7d00-4ddc-8242-b79749b9f2d6}</Project>

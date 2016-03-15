@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eddyt.Blog.Admin.Models
 {
@@ -12,6 +13,18 @@ namespace Eddyt.Blog.Admin.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<IdentityUser>().ToTable("Users");
+            modelBuilder.Entity<ApplicationUser>().ToTable("Users");
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
         }
     }
 }
