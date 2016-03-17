@@ -11,8 +11,8 @@ namespace Eddyt.Blog.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ArticleManager articleManager = new ArticleManager(new EFRepository<Post>(new EddytBlogObjectContext("DefaultConnection")));
-        private readonly CommentManager commentManager=new CommentManager(new EFRepository<Comment>(new EddytBlogObjectContext("DefaultConnection")));
+        private readonly ArticleManager articleManager = new ArticleManager(new EFRepository<Post>(new EddytBlogObjectContext("EddytBlogEntities")));
+        private readonly CommentManager commentManager=new CommentManager(new EFRepository<Comment>(new EddytBlogObjectContext("EddytBlogEntities")));
 
         [Authorize]
         public ActionResult Index(int page = 1)

@@ -11,7 +11,7 @@ namespace Eddyt.Blog.Admin.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection")
+            : base("EddytBlogEntities")
         {
         }
 
